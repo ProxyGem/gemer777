@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GEMER777 — Developer</title>
+    <meta name="description" content="GEMER777 — разработчик Python, HTML, CSS, C++, Java и Lua.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #030303;
+            --bg2: #080808;
+            --card: rgba(255,255,255,0.035);
+            --card-hover: rgba(255,255,255,0.07);
+            --border: rgba(255,255,255,0.12);
+            --border-hover: rgba(255,255,255,0.35);
+            --white: #ffffff;
+            --gray: #a3a3a3;
+            --dark-gray: #626262;
+            --glow: rgba(255,255,255,0.25);
+            --max-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08), transparent 35%),
+                radial-gradient(circle at 0% 50%, rgba(255,255,255,0.025), transparent 30%),
+                var(--bg);
+            color: var(--white);
+            font-family: "Inter", sans-serif;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.035;
+            background-image:
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* ---------------- BACKGROUND ---------------- */
+
+        #particles {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+        }
+
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            opacity: .13;
+            background-image:
+                linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: linear-gradient(to bottom, black, transparent 80%);
+        }
+
+        .ambient {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.035);
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: -4;
+        }
+
+        .ambient.one { top: 5%; left: -250px; }
+        .ambient.two { top: 45%; right: -250px; }
+
+        /* ---------------- LOADER ---------------- */
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity .8s, visibility .8s;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content { text-align: center; }
+
+        .loader-logo {
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(28px, 5vw, 55px);
+            font-weight: 800;
+            letter-spacing: 8px;
+            animation: loaderPulse 1.5s infinite alternate;
+        }
+
+        .loader-line {
+            width: 180px;
+            height: 1px;
+            margin: 20px auto;
+            background: linear-gradient(90deg, transparent, white, transparent);
+            animation: loaderLine 1.5s infinite;
+        }
+
+        .loader-text {
+            color: #666;
+            font-size: 11px;
+            letter-spacing: 5px;
+        }
+
+        @keyframes loaderPulse {
+            from { text-shadow: 0 0 5px rgba(255,255,255,.2); opacity: .55; }
+            to { text-shadow: 0 0 10px white, 0 0 35px rgba(255,255,255,.5); opacity: 1; }
+        }
+
+        @keyframes loaderLine {
+            0% { transform: scaleX(.1); opacity: .2; }
+            50% { transform: scaleX(1); opacity: 1; }
+            100% { transform: scaleX(.1); opacity: .2; }
+        }
+
+        /* ---------------- HEADER ---------------- */
+
+        header {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(calc(100% - 35px), var(--max-width));
+            height: 65px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 22px;
+            border: 1px solid rgba(255,255,255,.1);
+            background: rgba(4,4,4,.72);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            box-shadow: 0 15px 50px rgba(0,0,0,.4);
+        }
+
+        .logo {
+            font-family: "Orbitron", sans-serif;
+            font-weight: 800;
+            letter-spacing: 2px;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 25px;
+            height: 2px;
+            background: white;
+            box-shadow: 0 0 10px white;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            height: 100%;
+            align-items: center;
+        }
+
+        nav a {
+            position: relative;
+            color: #777;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: .3s;
+        }
+
+        nav a:hover, nav a.active { color: white; }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -23px;
+            width: 0;
+            height: 2px;
+            background: white;
+            transform: translateX(-50%);
+            transition: .3s;
+            box-shadow: 0 0 10px white;
+        }
+
+        nav a:hover::after, nav a.active::after { width: 25px; }
+
+        .header-settings {
+            width: 35px;
+            height: 35px;
+            display: grid;
+            place-items: center;
+            color: #777;
+            border-radius: 50%;
+            transition: .3s;
+        }
+
+        .header-settings:hover { color: white; transform: rotate(90deg); }
+
+        .mobile-menu {
+            display: none;
+            border: 0;
+            background: transparent;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* ---------------- HERO ---------------- */
+
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 650px;
+            height: 650px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,.06), transparent 65%);
+            filter: blur(30px);
+            animation: heroGlow 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            from { transform: scale(.9); }
+            to { transform: scale(1.15); }
+        }
+
+        .hero-content { position: relative; z-index: 2; }
+
+        .avatar-wrapper {
+            width: 210px;
+            height: 210px;
+            margin: 0 auto 38px;
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
+
+        .avatar-wrapper::before,
+        .avatar-wrapper::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            inset: -13px;
+            border: 1px solid rgba(255,255,255,.25);
+        }
+
+        .avatar-wrapper::before {
+            border-right-color: white;
+            border-bottom-color: transparent;
+            animation: avatarRotate 8s linear infinite;
+            box-shadow: 0 0 25px rgba(255,255,255,.2);
+        }
+
+        .avatar-wrapper::after {
+            inset: -25px;
+            border-color: rgba(255,255,255,.07);
+            border-left-color: rgba(255,255,255,.5);
+            animation: avatarRotate 15s linear infinite reverse;
+        }
+
+        @keyframes avatarRotate { to { transform: rotate(360deg); } }
+
+        .avatar {
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            border: 3px solid #171717;
+            box-shadow: 0 0 0 2px rgba(255,255,255,.45), 0 0 45px rgba(255,255,255,.22);
+            filter: grayscale(100%);
+            transition: .5s;
+        }
+
+        .avatar:hover { filter: grayscale(0%); transform: scale(1.04); }
+
+        .hero-title {
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(42px, 8vw, 90px);
+            line-height: .95;
+            letter-spacing: 5px;
+            font-weight: 900;
+            text-shadow: 0 0 10px rgba(255,255,255,.5), 0 0 45px rgba(255,255,255,.12);
+        }
+
+        .hero-subtitle {
+            margin-top: 17px;
+            font-family: "Orbitron", sans-serif;
+            color: #aaa;
+            font-size: clamp(13px, 2vw, 18px);
+            letter-spacing: 8px;
+        }
+
+        .hero-description {
+            max-width: 600px;
+            margin: 25px auto 0;
+            color: #777;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .scroll-down {
+            margin-top: 55px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 13px;
+            color: #777;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .scroll-arrow {
+            font-size: 28px;
+            color: white;
+            animation: scrollArrow 1.7s infinite;
+        }
+
+        @keyframes scrollArrow {
+            0%, 100% { transform: translateY(0); opacity: .4; }
+            50% { transform: translateY(10px); opacity: 1; }
+        }
+
+        /* ---------------- SECTIONS ---------------- */
+
+        section {
+            width: min(calc(100% - 40px), var(--max-width));
+            margin: 0 auto;
+            padding: 100px 0;
+            scroll-margin-top: 100px;
+        }
+
+        .section-title { text-align: center; margin-bottom: 55px; }
+
+        .section-title .mini {
+            color: #666;
+            font-size: 10px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-title h2 {
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(22px, 4vw, 35px);
+            letter-spacing: 3px;
+        }
+
+        .title-line {
+            width: 100%;
+            max-width: 480px;
+            height: 1px;
+            margin: 18px auto 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+            position: relative;
+        }
+
+        .title-line::before,
+        .title-line::after {
+            content: "";
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            top: -3px;
+            border: 1px solid white;
+            transform: rotate(45deg);
+        }
+
+        .title-line::before { left: 30%; }
+        .title-line::after { right: 30%; }
+
+        /* ---------------- LANGUAGES ---------------- */
+
+        .languages {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+        }
+
+        .language-card {
+            position: relative;
+            min-height: 190px;
+            padding: 30px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.01));
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform .45s cubic-bezier(.2,.8,.2,1), border-color .3s, background .3s, box-shadow .3s;
+        }
+
+        .language-card::before {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(110deg, transparent 40%, rgba(255,255,255,.08), transparent 60%);
+            transform: rotate(20deg);
+            transition: .8s;
+        }
+
+        .language-card:hover::before { top: 100%; }
+
+        .language-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--border-hover);
+            background: var(--card-hover);
+            box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 25px rgba(255,255,255,.05);
+        }
+
+        /* Стили для картинок-иконок (используются только для C++ и Lua) */
+        .language-icon {
+            font-size: 55px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #eee;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,.25));
+            transition: .4s;
+        }
+
+        .language-icon img {
+            height: 55px;
+            width: 55px;
+            object-fit: contain;
+        }
+
+        .language-card:hover .language-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 18px rgba(255,255,255,.6));
+        }
+
+        .language-name {
+            margin-top: 22px;
+            font-family: "Orbitron", sans-serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+
+        .language-line {
+            width: 25px;
+            height: 1px;
+            margin-top: 10px;
+            background: white;
+            transition: .4s;
+        }
+
+        .language-card:hover .language-line {
+            width: 50px;
+            box-shadow: 0 0 10px white;
+        }
+
+        /* ---------------- PROJECT ---------------- */
+
+        .project-card {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 45px;
+            align-items: center;
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: rgba(255,255,255,.025);
+            overflow: hidden;
+            transition: .5s;
+        }
+
+        .project-card::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.04);
+            filter: blur(70px);
+            right: -100px;
+            bottom: -150px;
+        }
+
+        .project-card:hover {
+            border-color: rgba(255,255,255,.25);
+            transform: translateY(-5px);
+            box-shadow: 0 30px 80px rgba(0,0,0,.4);
+        }
+
+        .project-preview {
+            position: relative;
+            min-height: 350px;
+            border-radius: 11px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.12);
+            background: radial-gradient(circle at 75% 30%, rgba(255,255,255,.12), transparent 20%), linear-gradient(135deg, #151515, #020202);
+        }
+
+        .project-preview::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(130deg, transparent 35%, rgba(255,255,255,.06) 35%, transparent 36%), linear-gradient(40deg, transparent 55%, rgba(255,255,255,.04) 55%, transparent 56%);
+        }
+
+        .preview-browser {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            height: calc(100% - 32px);
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 8px;
+            background: #030303;
+            overflow: hidden;
+        }
+
+        .browser-top {
+            height: 35px;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 6px;
+        }
+
+        .browser-dot { width: 7px; height: 7px; border-radius: 50%; background: #777; }
+
+        .browser-url {
+            margin-left: 10px;
+            font-size: 7px;
+            color: #555;
+            padding: 5px 10px;
+            border: 1px solid #171717;
+            border-radius: 20px;
+            flex: 1;
+        }
+
+        .preview-content {
+            height: calc(100% - 35px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+        }
+
+        .preview-content::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border: 1px solid rgba(255,255,255,.06);
+            transform: rotate(45deg);
+        }
+
+        .preview-logo {
+            font-family: "Orbitron", sans-serif;
+            font-size: 25px;
+            font-weight: 700;
+            z-index: 1;
+        }
+
+        .preview-sub {
+            margin-top: 12px;
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: #666;
+            z-index: 1;
+        }
+
+        .project-info { position: relative; z-index: 2; }
+
+        .project-tag {
+            display: inline-block;
+            padding: 7px 11px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 30px;
+            color: #888;
+            font-size: 9px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .project-info h3 {
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(30px, 5vw, 50px);
+            margin-bottom: 18px;
+        }
+
+        .project-info p {
+            color: #777;
+            line-height: 1.9;
+            font-size: 14px;
+            max-width: 450px;
+        }
+
+        .project-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 22px 0;
+        }
+
+        .project-feature {
+            font-size: 10px;
+            color: #999;
+            border: 1px solid rgba(255,255,255,.1);
+            padding: 7px 10px;
+            border-radius: 5px;
+        }
+
+        .project-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 21px;
+            border: 1px solid rgba(255,255,255,.35);
+            border-radius: 7px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: .35s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            transform: translateX(-105%);
+            background: white;
+            transition: .4s;
+            z-index: -1;
+        }
+
+        .project-button:hover { color: black; border-color: white; }
+        .project-button:hover::before { transform: translateX(0); }
+        .project-button i { transition: .3s; }
+        .project-button:hover i { transform: translateX(5px); }
+
+        /* ---------------- ABOUT ---------------- */
+
+        .about { text-align: center; }
+
+        .about-text {
+            max-width: 700px;
+            margin: auto;
+            color: #777;
+            line-height: 2;
+            font-size: 14px;
+        }
+
+        .about-text strong { color: #ddd; }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 13px;
+            margin-top: 35px;
+        }
+
+        .social {
+            width: 52px;
+            height: 52px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 11px;
+            display: grid;
+            place-items: center;
+            color: #888;
+            font-size: 19px;
+            transition: .35s;
+            background: rgba(255,255,255,.02);
+        }
+
+        .social:hover {
+            color: white;
+            border-color: rgba(255,255,255,.45);
+            transform: translateY(-7px);
+            box-shadow: 0 12px 30px rgba(0,0,0,.5);
+        }
+
+        /* ---------------- MUSIC ---------------- */
+
+        .music-player {
+            position: fixed;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            width: min(calc(100% - 30px), 850px);
+            z-index: 900;
+            display: flex;
+            align-items: center;
+            gap: 17px;
+            padding: 12px 18px;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 14px;
+            background: rgba(8,8,8,.78);
+            backdrop-filter: blur(25px);
+            box-shadow: 0 20px 60px rgba(0,0,0,.55);
+        }
+
+        .music-cover {
+            width: 48px;
+            height: 48px;
+            border-radius: 7px;
+            object-fit: cover;
+            filter: grayscale(100%);
+        }
+
+        .music-toggle {
+            width: 32px;
+            height: 32px;
+            border: 0;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .music-info { min-width: 125px; }
+        .music-title { font-size: 11px; font-weight: 600; }
+        .music-artist { color: #666; font-size: 9px; margin-top: 5px; }
+
+        .music-progress-container { flex: 1; }
+
+        .music-progress {
+            width: 100%;
+            height: 3px;
+            background: #242424;
+            border-radius: 10px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .music-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: white;
+            box-shadow: 0 0 10px white;
+        }
+
+        .music-time {
+            margin-top: 7px;
+            display: flex;
+            justify-content: space-between;
+            color: #555;
+            font-size: 8px;
+        }
+
+        /* Новый стиль для громкости */
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .volume-control i {
+            font-size: 14px;
+            color: #777;
+            transition: color 0.3s;
+        }
+
+        .volume-control i:hover { color: #fff; }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 80px;
+            height: 3px;
+            background: #242424;
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: -5.5px;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+        .volume-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            cursor: pointer;
+            border: none;
+        }
+
+        .volume-slider::-webkit-slider-runnable-track {
+            height: 3px;
+            background: #242424;
+            border-radius: 10px;
+        }
+
+        .volume-slider::-moz-range-track {
+            height: 3px;
+            background: #242424;
+            border-radius: 10px;
+            border: none;
+        }
+
+        /* Кнопки переключения треков */
+        .track-nav {
+            display: flex;
+            gap: 6px;
+        }
+
+        .track-nav button {
+            width: 28px;
+            height: 28px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 50%;
+            background: transparent;
+            color: #777;
+            cursor: pointer;
+            font-size: 12px;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .track-nav button:hover {
+            color: white;
+            border-color: rgba(255,255,255,.4);
+        }
+
+        /* ---------------- FOOTER ---------------- */
+
+        footer {
+            width: min(calc(100% - 40px), var(--max-width));
+            margin: auto;
+            padding: 30px 0 130px;
+            border-top: 1px solid rgba(255,255,255,.06);
+            text-align: center;
+            color: #444;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        footer strong { color: #777; }
+
+        /* ---------------- TOP BUTTON ---------------- */
+
+        .to-top {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            width: 42px;
+            height: 42px;
+            z-index: 901;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.15);
+            background: rgba(5,5,5,.7);
+            backdrop-filter: blur(10px);
+            color: #777;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: .3s;
+        }
+
+        .to-top.visible { opacity: 1; visibility: visible; }
+        .to-top:hover { color: white; border-color: white; }
+
+        /* ---------------- REVEAL ---------------- */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ---------------- RESPONSIVE ---------------- */
+
+        @media (max-width: 950px) {
+            .languages { grid-template-columns: repeat(3, 1fr); }
+            .project-card { grid-template-columns: 1fr; }
+            .project-preview { min-height: 300px; }
+            .project-info { padding: 10px 10px 25px; }
+            .volume-slider { width: 60px; }
+        }
+
+        @media (max-width: 700px) {
+            header { height: 58px; top: 10px; }
+
+            nav {
+                position: absolute;
+                top: calc(100% + 10px);
+                left: 0; right: 0;
+                height: auto;
+                padding: 20px;
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                background: rgba(5,5,5,.95);
+                border: 1px solid rgba(255,255,255,.1);
+                border-radius: 14px;
+                backdrop-filter: blur(20px);
+            }
+
+            nav.open { display: flex; }
+            nav a { padding: 15px; }
+            nav a::after { display: none; }
+            .mobile-menu { display: block; }
+            .header-settings { display: none; }
+            .logo { font-size: 17px; }
+
+            .avatar-wrapper { width: 165px; height: 165px; }
+            .avatar { width: 150px; height: 150px; }
+
+            .languages { grid-template-columns: repeat(2, 1fr); }
+            .language-card { min-height: 160px; }
+            .language-icon { font-size: 45px; }
+
+            section { padding: 75px 0; }
+
+            .music-player {
+                gap: 9px;
+                padding: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .music-cover { display: none; }
+            .music-info { min-width: 100px; }
+            .volume-slider { width: 50px; }
+            .to-top { right: 15px; bottom: 90px; }
+
+            .track-nav button {
+                width: 24px;
+                height: 24px;
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .languages { grid-template-columns: 1fr 1fr; gap: 9px; }
+            .language-card { min-height: 145px; }
+            .language-name { font-size: 10px; }
+            .project-card { padding: 12px; }
+            .project-preview { min-height: 250px; }
+            .hero-title { letter-spacing: 2px; }
+            .hero-subtitle { letter-spacing: 4px; }
+            .volume-slider { width: 40px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">GEMER777</div>
+            <div class="loader-line"></div>
+            <div class="loader-text">INITIALIZING...</div>
+        </div>
+    </div>
+
+    <!-- BACKGROUND -->
+    <canvas id="particles"></canvas>
+    <div class="grid-bg"></div>
+    <div class="ambient one"></div>
+    <div class="ambient two"></div>
+
+    <!-- HEADER -->
+    <header>
+        <a href="#home" class="logo">GEMER777</a>
+
+        <nav id="nav">
+            <a href="#home" class="active">Главная</a>
+            <a href="#languages">Языки</a>
+            <a href="#projects">Проекты</a>
+            <a href="#about">Обо мне</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+
+        <button class="mobile-menu" id="mobileMenu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="header-settings">
+            <i class="fa-solid fa-gear"></i>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <main>
+
+        <section class="hero" id="home">
+            <div class="hero-content reveal">
+
+                <div class="avatar-wrapper">
+                    <img
+                        class="avatar"
+                        src="https://cdn.discordapp.com/attachments/1443316356886823054/1541733751682240632/photo_2026-08-15_14-47-33.jpg?ex=6a8eaaf2&is=6a8d5972&hm=dd9a99c61dd840e9d2afdc8b7260c32f3d258fde343314878a8810e408b705a9"
+                        alt="GEMER777"
+                    >
+                </div>
+
+                <h1 class="hero-title">GEMER777</h1>
+
+                <div class="hero-subtitle">
+                    &lt; DEVELOPER /&gt;
+                </div>
+
+                <p class="hero-description">
+                    Создаю будущее через код.
+                    Стремлюсь к совершенству в каждой строке
+                    и превращаю идеи в работающие проекты.
+                </p>
+
+                <a href="#languages" class="scroll-down">
+                    <span>Scroll to explore</span>
+                    <i class="fa-solid fa-chevron-down scroll-arrow"></i>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- LANGUAGES -->
+        <section id="languages">
+
+            <div class="section-title reveal">
+                <div class="mini">My Skills</div>
+                <h2>ЯЗЫКИ ПРОГРАММИРОВАНИЯ</h2>
+                <div class="title-line"></div>
+            </div>
+
+            <div class="languages">
+
+                <!-- Python (Font Awesome) -->
+                <div class="language-card reveal">
+                    <div class="language-icon">
+                        <i class="fa-brands fa-python"></i>
+                    </div>
+                    <div class="language-name">PYTHON</div>
+                    <div class="language-line"></div>
+                </div>
+
+                <!-- HTML (Font Awesome) -->
+                <div class="language-card reveal">
+                    <div class="language-icon">
+                        <i class="fa-brands fa-html5"></i>
+                    </div>
+                    <div class="language-name">HTML</div>
+                    <div class="language-line"></div>
+                </div>
+
+                <!-- CSS (Font Awesome) -->
+                <div class="language-card reveal">
+                    <div class="language-icon">
+                        <i class="fa-brands fa-css3-alt"></i>
+                    </div>
+                    <div class="language-name">CSS</div>
+                    <div class="language-line"></div>
+                </div>
+
+                <!-- C++ (ВАША КАРТИНКА) -->
+                <div class="language-card reveal">
+                    <div class="language-icon">
+                        <img src="https://cdn.coursehunter.net/category/c.png" alt="C++">
+                    </div>
+                    <div class="language-name">C++</div>
+                    <div class="language-line"></div>
+                </div>
+
+                <!-- Java (Font Awesome) -->
+                <div class="language-card reveal">
+                    <div class="language-icon">
+                        <i class="fa-brands fa-java"></i>
+                    </div>
+                    <div class="language-name">JAVA</div>
+                    <div class="language-line"></div>
+                </div>
+
+                <!-- Lua (ВАША КАРТИНКА) -->
+                <div class="language-card reveal">
+                    <div class="language-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Lua-Logo.svg/1280px-Lua-Logo.svg.png" alt="Lua">
+                    </div>
+                    <div class="language-name">LUA</div>
+                    <div class="language-line"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects">
+
+            <div class="section-title reveal">
+                <div class="mini">Selected Work</div>
+                <h2>ПРОЕКТЫ</h2>
+                <div class="title-line"></div>
+            </div>
+
+            <div class="project-card reveal">
+
+                <div class="project-preview">
+
+                    <div class="preview-browser">
+
+                        <div class="browser-top">
+                            <span class="browser-dot"></span>
+                            <span class="browser-dot"></span>
+                            <span class="browser-dot"></span>
+
+                            <div class="browser-url">
+                                proxygem.github.io/site
+                            </div>
+                        </div>
+
+                        <div class="preview-content">
+                            <div class="preview-logo">ProxyGem</div>
+                            <div class="preview-sub">
+                                MODERN PROXY SERVICE
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="project-info">
+
+                    <span class="project-tag">
+                        FEATURED PROJECT
+                    </span>
+
+                    <h3>ProxyGem</h3>
+
+                    <p>
+                        Современный проект, созданный с акцентом
+                        на производительность, минималистичный дизайн
+                        и удобство использования.
+                    </p>
+
+                    <div class="project-features">
+                        <span class="project-feature">WEB</span>
+                        <span class="project-feature">PROXY</span>
+                        <span class="project-feature">UI / UX</span>
+                        <span class="project-feature">MODERN</span>
+                    </div>
+
+                    <a
+                        class="project-button"
+                        href="https://proxygem.github.io/site/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Посмотреть проект
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about">
+
+            <div class="section-title reveal">
+                <div class="mini">Who I Am</div>
+                <h2>ОБО МНЕ</h2>
+                <div class="title-line"></div>
+            </div>
+
+            <div class="about reveal">
+
+                <p class="about-text">
+                    Я — <strong>GEMER777</strong>, разработчик, который любит
+                    воплощать идеи в жизнь с помощью кода.
+                    Постоянно развиваюсь, изучаю новые технологии
+                    и создаю уникальные цифровые решения.
+                    <br><br>
+                    Мой подход — <strong>минимализм, качество и внимание
+                    к деталям.</strong>
+                </p>
+
+                <div class="socials" id="contacts">
+
+                    <a
+                        href="#"
+                        class="social"
+                        title="Discord"
+                    >
+                        <i class="fa-brands fa-discord"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        class="social"
+                        title="Telegram"
+                    >
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        class="social"
+                        title="GitHub"
+                    >
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+
+                    <a
+                        href="https://vk.ru/artist/3973896373441731186"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social"
+                        title="VK"
+                    >
+                        <i class="fa-brands fa-vk"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- MUSIC PLAYER -->
+    <div class="music-player">
+
+        <button class="music-toggle" id="musicToggle" title="Воспроизвести">
+            <i class="fa-solid fa-play"></i>
+        </button>
+
+        <img
+            class="music-cover"
+            src="https://cdn.discordapp.com/attachments/1443316356886823054/1541733751682240632/photo_2026-08-15_14-47-33.jpg?ex=6a8eaaf2&is=6a8d5972&hm=dd9a99c61dd840e9d2afdc8b7260c32f3d258fde343314878a8810e408b705a9"
+            alt="Dark Prince"
+        >
+
+        <div class="music-info">
+            <div class="music-title" id="trackTitle">Отвратительный король</div>
+            <div class="music-artist" id="trackArtist">Тёмный принц</div>
+        </div>
+
+        <div class="music-progress-container">
+
+            <div class="music-progress" id="progressContainer">
+                <div
+                    class="music-progress-fill"
+                    id="progressFill"
+                ></div>
+            </div>
+
+            <div class="music-time">
+                <span id="currentTime">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+
+        </div>
+
+        <div class="track-nav">
+            <button id="prevTrack" title="Предыдущий трек">
+                <i class="fa-solid fa-backward-step"></i>
+            </button>
+            <button id="nextTrack" title="Следующий трек">
+                <i class="fa-solid fa-forward-step"></i>
+            </button>
+        </div>
+
+        <div class="volume-control">
+            <i class="fa-solid fa-volume-high"></i>
+            <input
+                class="volume-slider"
+                id="volume"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value="0.7"
+            >
+        </div>
+
+    </div>
+
+    <!-- AUDIO -->
+    <audio id="audio" preload="auto" autoplay>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- TOP -->
+    <button class="to-top" id="toTop" title="Наверх">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 <strong>GEMER777</strong>.
+        Все права защищены.
+    </footer>
+
+    <script>
+
+        /* =========================
+           LOADER
+        ========================= */
+
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                document.getElementById("loader")
+                    .classList.add("hidden");
+
+                document.querySelector(".hero .reveal")
+                    ?.classList.add("visible");
+            }, 900);
+        });
+
+
+        /* =========================
+           MOBILE MENU
+        ========================= */
+
+        const mobileMenu = document.getElementById("mobileMenu");
+        const nav = document.getElementById("nav");
+
+        mobileMenu.addEventListener("click", () => {
+            nav.classList.toggle("open");
+
+            const icon = mobileMenu.querySelector("i");
+
+            if (nav.classList.contains("open")) {
+                icon.className = "fa-solid fa-xmark";
+            } else {
+                icon.className = "fa-solid fa-bars";
+            }
+        });
+
+        document.querySelectorAll("nav a").forEach(link => {
+            link.addEventListener("click", () => {
+                nav.classList.remove("open");
+
+                mobileMenu.querySelector("i").className =
+                    "fa-solid fa-bars";
+            });
+        });
+
+
+        /* =========================
+           SCROLL REVEAL
+        ========================= */
+
+        const observer = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                    }
+
+                });
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+        document.querySelectorAll(".reveal").forEach(element => {
+            observer.observe(element);
+        });
+
+
+        /* =========================
+           ACTIVE NAVIGATION
+        ========================= */
+
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll("nav a");
+
+        window.addEventListener("scroll", () => {
+
+            let current = "";
+
+            sections.forEach(section => {
+
+                const sectionTop =
+                    section.offsetTop - 180;
+
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute("id");
+                }
+
+            });
+
+            navLinks.forEach(link => {
+
+                link.classList.remove("active");
+
+                if (
+                    link.getAttribute("href") === "#" + current
+                ) {
+                    link.classList.add("active");
+                }
+
+            });
+
+        });
+
+
+        /* =========================
+           PARTICLES
+        ========================= */
+
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+
+        let particles = [];
+        let mouse = {
+            x: null,
+            y: null,
+            radius: 120
+        };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+
+        window.addEventListener("resize", () => {
+            resizeCanvas();
+            createParticles();
+        });
+
+        window.addEventListener("mousemove", event => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        window.addEventListener("mouseleave", () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        class Particle {
+
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+
+                this.size =
+                    Math.random() * 1.5 + 0.4;
+
+                this.speedX =
+                    (Math.random() - .5) * .25;
+
+                this.speedY =
+                    (Math.random() - .5) * .25;
+
+                this.opacity =
+                    Math.random() * .55 + .1;
+            }
+
+            update() {
+
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) {
+                    this.speedX *= -1;
+                }
+
+                if (this.y < 0 || this.y > canvas.height) {
+                    this.speedY *= -1;
+                }
+
+                if (mouse.x !== null) {
+
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+
+                    const distance =
+                        Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouse.radius) {
+
+                        const force =
+                            (mouse.radius - distance)
+                            / mouse.radius;
+
+                        this.x -=
+                            (dx / distance) * force * 0.5;
+
+                        this.y -=
+                            (dy / distance) * force * 0.5;
+                    }
+                }
+            }
+
+            draw() {
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    this.x,
+                    this.y,
+                    this.size,
+                    0,
+                    Math.PI * 2
+                );
+
+                ctx.fillStyle =
+                    `rgba(255,255,255,${this.opacity})`;
+
+                ctx.fill();
+            }
+        }
+
+        function createParticles() {
+
+            particles = [];
+
+            const amount =
+                Math.min(
+                    Math.floor(
+                        (canvas.width * canvas.height) / 12000
+                    ),
+                    130
+                );
+
+            for (let i = 0; i < amount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+
+            for (let a = 0; a < particles.length; a++) {
+
+                for (
+                    let b = a + 1;
+                    b < particles.length;
+                    b++
+                ) {
+
+                    const dx =
+                        particles[a].x - particles[b].x;
+
+                    const dy =
+                        particles[a].y - particles[b].y;
+
+                    const distance =
+                        Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 130) {
+
+                        const opacity =
+                            .12 * (1 - distance / 130);
+
+                        ctx.strokeStyle =
+                            `rgba(255,255,255,${opacity})`;
+
+                        ctx.lineWidth = .5;
+
+                        ctx.beginPath();
+
+                        ctx.moveTo(
+                            particles[a].x,
+                            particles[a].y
+                        );
+
+                        ctx.lineTo(
+                            particles[b].x,
+                            particles[b].y
+                        );
+
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            connectParticles();
+
+            requestAnimationFrame(
+                animateParticles
+            );
+        }
+
+        createParticles();
+        animateParticles();
+
+
+        /* =========================
+           MUSIC PLAYER (Playlist)
+        ========================= */
+
+        // Плейлист
+        const playlist = [
+            {
+                src: "music.mp3",
+                title: "Отвратительный король",
+                artist: "Тёмный принц"
+            },
+            {
+                src: "music1.mp3",
+                title: "Swing Lynn (Slowed Version)",
+                artist: "HarmLess"
+            },
+            {
+                src: "music2.mp3",
+                title: "nope youre too late i already died (slowed instrumental)",
+                artist: "wifiskeleton"
+            },
+            {
+                src: "music3.mp3",
+                title: "Listen to Me Looking at Me",
+                artist: "Lalo Project"
+            },
+            {
+                src: "music4.mp3",
+                title: "hunter eyes",
+                artist: "elifymane, foreveryaho, LXVENGER"
+            },
+            {
+                src: "music5.mp3",
+                title: "Celovatsya (Hardstyle)",
+                artist: "lightprey"
+            }
+        ];
+
+        let currentTrack = 0;
+
+        const audio = document.getElementById("audio");
+        const musicToggle = document.getElementById("musicToggle");
+        const progressContainer = document.getElementById("progressContainer");
+        const progressFill = document.getElementById("progressFill");
+        const currentTimeEl = document.getElementById("currentTime");
+        const durationEl = document.getElementById("duration");
+        const volume = document.getElementById("volume");
+        const trackTitle = document.getElementById("trackTitle");
+        const trackArtist = document.getElementById("trackArtist");
+        const prevBtn = document.getElementById("prevTrack");
+        const nextBtn = document.getElementById("nextTrack");
+
+        // Функция загрузки трека
+        function loadTrack(index) {
+            const track = playlist[index];
+            if (!track) return;
+
+            const wasPlaying = !audio.paused;
+
+            audio.src = track.src;
+            audio.load();
+
+            trackTitle.textContent = track.title;
+            trackArtist.textContent = track.artist;
+
+            progressFill.style.width = "0%";
+            currentTimeEl.textContent = "0:00";
+
+            if (wasPlaying) {
+                audio.play().catch(() => {});
+            }
+        }
+
+        // Переключение треков
+        function nextTrack() {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            loadTrack(currentTrack);
+        }
+
+        function prevTrack() {
+            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrack);
+        }
+
+        loadTrack(0);
+
+        /* =========================
+           АВТОЗАПУСК МУЗЫКИ
+        ========================= */
+        
+        function tryAutoPlay() {
+            if (audio.paused) {
+                audio.play().catch(() => {});
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", tryAutoPlay);
+        window.addEventListener("load", tryAutoPlay);
+        
+        const unlockAudio = () => {
+            tryAutoPlay();
+            document.removeEventListener("click", unlockAudio);
+            document.removeEventListener("mousemove", unlockAudio);
+            document.removeEventListener("touchstart", unlockAudio);
+            document.removeEventListener("keydown", unlockAudio);
+        };
+
+        document.addEventListener("click", unlockAudio);
+        document.addEventListener("mousemove", unlockAudio);
+        document.addEventListener("touchstart", unlockAudio);
+        document.addEventListener("keydown", unlockAudio);
+
+        /* =========================
+           ОБРАБОТЧИКИ ПЛЕЕРА
+        ========================= */
+
+        musicToggle.addEventListener("click", () => {
+            if (audio.paused) {
+                audio.play().catch(() => {
+                    alert("Не удалось воспроизвести трек. Проверьте наличие файлов.");
+                });
+            } else {
+                audio.pause();
+            }
+        });
+
+        prevBtn.addEventListener("click", prevTrack);
+        nextBtn.addEventListener("click", nextTrack);
+
+        audio.addEventListener("play", () => {
+            musicToggle.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        });
+
+        audio.addEventListener("pause", () => {
+            musicToggle.innerHTML = '<i class="fa-solid fa-play"></i>';
+        });
+
+        audio.addEventListener("loadedmetadata", () => {
+            durationEl.textContent = formatTime(audio.duration);
+        });
+
+        audio.addEventListener("timeupdate", () => {
+            if (!audio.duration) return;
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progressFill.style.width = percent + "%";
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+        });
+
+        audio.addEventListener("ended", () => {
+            nextTrack();
+        });
+
+        progressContainer.addEventListener("click", (event) => {
+            if (!audio.duration) return;
+            const rect = progressContainer.getBoundingClientRect();
+            const percent = (event.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+        });
+
+        volume.addEventListener("input", () => {
+            audio.volume = volume.value;
+        });
+
+        function formatTime(seconds) {
+            if (!isFinite(seconds)) return "0:00";
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
+            return `${minutes}:${secs}`;
+        }
+
+
+        /* =========================
+           SCROLL TO TOP
+        ========================= */
+
+        const toTop =
+            document.getElementById("toTop");
+
+        window.addEventListener("scroll", () => {
+
+            if (window.scrollY > 500) {
+                toTop.classList.add("visible");
+            } else {
+                toTop.classList.remove("visible");
+            }
+
+        });
+
+        toTop.addEventListener("click", () => {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        });
+
+
+        /* =========================
+           3D TILT FOR CARDS
+        ========================= */
+
+        document.querySelectorAll(".language-card")
+            .forEach(card => {
+
+                card.addEventListener("mousemove", event => {
+
+                    const rect =
+                        card.getBoundingClientRect();
+
+                    const x =
+                        event.clientX - rect.left;
+
+                    const y =
+                        event.clientY - rect.top;
+
+                    const rotateY =
+                        ((x / rect.width) - .5) * 8;
+
+                    const rotateX =
+                        ((y / rect.height) - .5) * -8;
+
+                    card.style.transform =
+                        `perspective(700px)
+                         rotateX(${rotateX}deg)
+                         rotateY(${rotateY}deg)
+                         translateY(-8px)`;
+
+                });
+
+                card.addEventListener("mouseleave", () => {
+
+                    card.style.transform = "";
+
+                });
+
+            });
+
+
+        /* =========================
+           PARALLAX HERO
+        ========================= */
+
+        window.addEventListener("scroll", () => {
+
+            const hero =
+                document.querySelector(".hero-content");
+
+            if (!hero) return;
+
+            const scroll =
+                window.scrollY;
+
+            if (scroll < window.innerHeight) {
+
+                hero.style.transform =
+                    `translateY(${scroll * .12}px)`;
+
+                hero.style.opacity =
+                    Math.max(
+                        0,
+                        1 - scroll / 700
+                    );
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
